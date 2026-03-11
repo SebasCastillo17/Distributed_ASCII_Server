@@ -1,0 +1,1187 @@
+= Configuración de VLANs
+:toc:
+
+NOTE: Este documento contiene la configuración de las VLANs de los switches de las Isla 2. Las otras islas también están implementadas, pero no se agregaron por temas redundantes.
+
+== Estudiantes:
+
+* Angel Mena Coudin | C34789
+* Juan José Víquez | C3
+* Sebastian | C
+* Allen | C
+
+== Resumen:
+
+Se presentan 6 islas, cada una tiene su propia vlan y su propia red, estás están conectadas a un switch central que se conecta a un router, que permite la comunicación entre las islas.
+El documento presenta la configuración de switches y el router.
+
+== Configuraciones; vlans y startup
+
+=== SwIsla1:
+
+==== Configuración de VLAN
+
+****
+  SwIsla1#sh vl b
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                  Fa0/21, Fa0/22, Fa0/23, Gig0/1
+                                                  Gig0/2
+  110  grupo1                           active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+
+==== Configuración Startup
+
+****
+  SwIsla1#sh sta
+  Building configuration...
+  Current configuration : 1763 bytes
+  !
+  version 15.0
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname SwIsla1
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  spanning-tree extend system-id
+  !
+  interface FastEthernet0/1
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/2
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/3
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/4
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/5
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/6
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/7
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/8
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/9
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/10
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/11
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/12
+  switchport access vlan 110
+  switchport mode access
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  !
+  interface FastEthernet0/20
+  !
+  interface FastEthernet0/21
+  !
+  interface FastEthernet0/22
+  !
+  interface FastEthernet0/23
+  !
+  interface FastEthernet0/24
+  switchport trunk allowed vlan 110
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/1
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line vty 0 4
+  login
+  line vty 5 15
+  login
+  !
+  !
+  !
+  !
+  end
+****
+
+=== SwIsla2:
+
+==== Configuración de VLAN
+
+****
+  SwIsla2#show vl b
+
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                  Fa0/21, Fa0/22, Fa0/23, Gig0/1
+                                                  Gig0/2
+  120  Grupo2                           active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+
+==== Configuración Startup
+
+****
+  SwIsla2#sh startup-config 
+  Using 1763 bytes
+  !
+  version 15.0
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname SwIsla2
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  spanning-tree extend system-id
+  !
+  interface FastEthernet0/1
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/2
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/3
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/4
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/5
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/6
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/7
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/8
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/9
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/10
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/11
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/12
+  switchport access vlan 120
+  switchport mode access
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  !
+  interface FastEthernet0/20
+  !
+  interface FastEthernet0/21
+  !
+  interface FastEthernet0/22
+  !
+  interface FastEthernet0/23
+  !
+  interface FastEthernet0/24
+  switchport trunk allowed vlan 120
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/1
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line vty 0 4
+  login
+  line vty 5 15
+  login
+  !
+  !
+  !
+  !
+  end
+****
+
+=== SwIsla3:
+
+==== Configuración de VLAN
+
+****
+  SwIsla3#sh vl b
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                  Fa0/21, Fa0/22, Fa0/23, Gig0/1
+                                                  Gig0/2
+  130  Grupo3                           active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+
+==== Configuración Startup
+
+****
+  SwIsla3#sh sta
+  Using 1763 bytes
+  !
+  version 15.0
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname SwIsla3
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  spanning-tree extend system-id
+  !
+  interface FastEthernet0/1
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/2
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/3
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/4
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/5
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/6
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/7
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/8
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/9
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/10
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/11
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/12
+  switchport access vlan 130
+  switchport mode access
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  !
+  interface FastEthernet0/20
+  !
+  interface FastEthernet0/21
+  !
+  interface FastEthernet0/22
+  !
+  interface FastEthernet0/23
+  !
+  interface FastEthernet0/24
+  switchport trunk allowed vlan 130
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/1
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line vty 0 4
+  login
+  line vty 5 15
+  login
+  !
+  !
+  !
+  !
+  end
+****
+
+=== SwIsla4:
+
+==== Configuración de VLAN
+
+****
+  SwIsla4#sh vl b
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                  Fa0/21, Fa0/22, Fa0/23, Gig0/1
+                                                  Gig0/2
+  140  Grupo4                           active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+
+==== Configuración Startup
+
+****
+  SwIsla4#sh sta
+  Using 1763 bytes
+  !
+  version 15.0
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname SwIsla4
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  spanning-tree extend system-id
+  !
+  interface FastEthernet0/1
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/2
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/3
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/4
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/5
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/6
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/7
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/8
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/9
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/10
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/11
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/12
+  switchport access vlan 140
+  switchport mode access
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  !
+  interface FastEthernet0/20
+  !
+  interface FastEthernet0/21
+  !
+  interface FastEthernet0/22
+  !
+  interface FastEthernet0/23
+  !
+  interface FastEthernet0/24
+  switchport trunk allowed vlan 140
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/1
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line vty 0 4
+  login
+  line vty 5 15
+  login
+  !
+  !
+  !
+  !
+  end
+****
+
+=== SwIsla5:
+
+==== Configuración de VLAN
+
+****
+  SwIsla5#sh vl b
+
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                  Fa0/21, Fa0/22, Fa0/23, Gig0/1
+                                                  Gig0/2
+  150  Grupo5                           active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+
+==== Configuración Startup
+
+****
+  SwIsla5#sh sta
+  Using 1763 bytes
+  !
+  version 15.0
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname SwIsla5
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  spanning-tree extend system-id
+  !
+  interface FastEthernet0/1
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/2
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/3
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/4
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/5
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/6
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/7
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/8
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/9
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/10
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/11
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/12
+  switchport access vlan 150
+  switchport mode access
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  !
+  interface FastEthernet0/20
+  !
+  interface FastEthernet0/21
+  !
+  interface FastEthernet0/22
+  !
+  interface FastEthernet0/23
+  !
+  interface FastEthernet0/24
+  switchport trunk allowed vlan 150
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/1
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line vty 0 4
+  login
+  line vty 5 15
+  login
+  !
+  !
+  !
+  !
+  end
+****
+
+=== SwIsla6:
+
+==== Configuración de VLAN
+
+****
+  SwIsla6#sh vl b
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                  Fa0/21, Fa0/22, Fa0/23, Gig0/1
+                                                  Gig0/2
+  160  Grupo6                           active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+
+==== Configuración Startup
+
+****
+  SwIsla6#sh sta
+  Using 1763 bytes
+  !
+  version 15.0
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname SwIsla6
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  spanning-tree extend system-id
+  !
+  interface FastEthernet0/1
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/2
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/3
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/4
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/5
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/6
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/7
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/8
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/9
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/10
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/11
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/12
+  switchport access vlan 160
+  switchport mode access
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  !
+  interface FastEthernet0/20
+  !
+  interface FastEthernet0/21
+  !
+  interface FastEthernet0/22
+  !
+  interface FastEthernet0/23
+  !
+  interface FastEthernet0/24
+  switchport trunk allowed vlan 160
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/1
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line vty 0 4
+  login
+  line vty 5 15
+  login
+  !
+  !
+  !
+  !
+  end
+****
+
+=== IslaSwitcher:
+
+==== Configuración de VLANs
+
+****
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                  Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Gig0/1, Gig0/2
+  110  Grupo1                           active    
+  120  Grupo2                           active    
+  130  Grupo3                           active    
+  140  Grupo4                           active    
+  150  Grupo5                           active    
+  160  Grupo6                           active    
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+==== Configuración Startup
+
+****
+  IslaSwitcher#sh startup-config 
+  Using 1434 bytes
+  !
+  version 15.0
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname IslaSwitcher
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  spanning-tree extend system-id
+  !
+  interface FastEthernet0/1
+  !
+  interface FastEthernet0/2
+  !
+  interface FastEthernet0/3
+  !
+  interface FastEthernet0/4
+  !
+  interface FastEthernet0/5
+  !
+  interface FastEthernet0/6
+  !
+  interface FastEthernet0/7
+  !
+  interface FastEthernet0/8
+  !
+  interface FastEthernet0/9
+  !
+  interface FastEthernet0/10
+  !
+  interface FastEthernet0/11
+  !
+  interface FastEthernet0/12
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  switchport trunk allowed vlan 160
+  switchport mode trunk
+  !
+  interface FastEthernet0/20
+  switchport trunk allowed vlan 150
+  switchport mode trunk
+  !
+  interface FastEthernet0/21
+  switchport trunk allowed vlan 140
+  switchport mode trunk
+  !
+  interface FastEthernet0/22
+  switchport trunk allowed vlan 130
+  switchport mode trunk
+  !
+  interface FastEthernet0/23
+  switchport trunk allowed vlan 120
+  switchport mode trunk
+  !
+  interface FastEthernet0/24
+  switchport trunk allowed vlan 110
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/1
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line vty 0 4
+  login
+  line vty 5 15
+  login
+  !
+  !
+  !
+  !
+  end
+****
+
+=== SwRou3:
+
+==== Configuración de VLANs
+
+****
+  SwRou3#sh vlan b
+  VLAN Name                             Status    Ports
+  ---- -------------------------------- --------- -------------------------------
+  1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                  Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                  Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                  Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                  Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                  Fa0/21, Fa0/22, Fa0/23, Fa0/24
+                                                  Gig0/2
+  110  grupo1                           active    
+  120  grupo2                           active    
+  130  grupo3                           active    
+  140  grupo4                           active    
+  150  grupo5                           active    
+  160  grupo6                           active    
+  1002 fddi-default                     active    
+  1003 token-ring-default               active    
+  1004 fddinet-default                  active    
+  1005 trnet-default                    active
+****
+
+==== Configuración Startup
+
+****
+  SwRou3#sh star
+  Using 2524 bytes
+  !
+  version 12.2(37)SE1
+  no service timestamps log datetime msec
+  no service timestamps debug datetime msec
+  no service password-encryption
+  !
+  hostname SwRou3
+  !
+  !
+  !
+  ip dhcp excluded-address 172.16.123.17
+  ip dhcp excluded-address 172.16.123.33
+  ip dhcp excluded-address 172.16.123.49
+  ip dhcp excluded-address 172.16.123.65
+  ip dhcp excluded-address 172.16.123.81
+  ip dhcp excluded-address 172.16.123.97
+  !
+  ip dhcp pool VLAN110
+  network 172.16.123.16 255.255.255.240
+  default-router 172.16.123.17
+  ip dhcp pool VLAN120
+  network 172.16.123.32 255.255.255.240
+  default-router 172.16.123.33
+  ip dhcp pool VLAN130
+  network 172.16.123.48 255.255.255.240
+  default-router 172.16.123.49
+  ip dhcp pool VLAN140
+  network 172.16.123.64 255.255.255.240
+  default-router 172.16.123.65
+  ip dhcp pool VLAN150
+  network 172.16.123.80 255.255.255.240
+  default-router 172.16.123.81
+  ip dhcp pool VLAN160
+  network 172.16.123.96 255.255.255.240
+  default-router 172.16.123.97
+  !
+  !
+  ip routing
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  spanning-tree mode pvst
+  !
+  !
+  !
+  !
+  !
+  !
+  interface FastEthernet0/1
+  !
+  interface FastEthernet0/2
+  !
+  interface FastEthernet0/3
+  !
+  interface FastEthernet0/4
+  !
+  interface FastEthernet0/5
+  !
+  interface FastEthernet0/6
+  !
+  interface FastEthernet0/7
+  !
+  interface FastEthernet0/8
+  !
+  interface FastEthernet0/9
+  !
+  interface FastEthernet0/10
+  !
+  interface FastEthernet0/11
+  !
+  interface FastEthernet0/12
+  !
+  interface FastEthernet0/13
+  !
+  interface FastEthernet0/14
+  !
+  interface FastEthernet0/15
+  !
+  interface FastEthernet0/16
+  !
+  interface FastEthernet0/17
+  !
+  interface FastEthernet0/18
+  !
+  interface FastEthernet0/19
+  !
+  interface FastEthernet0/20
+  !
+  interface FastEthernet0/21
+  !
+  interface FastEthernet0/22
+  !
+  interface FastEthernet0/23
+  !
+  interface FastEthernet0/24
+  !
+  interface GigabitEthernet0/1
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  !
+  interface GigabitEthernet0/2
+  !
+  interface Vlan1
+  no ip address
+  shutdown
+  !
+  interface Vlan110
+  mac-address 000b.bec4.4901
+  ip address 172.16.123.17 255.255.255.240
+  !
+  interface Vlan120
+  mac-address 000b.bec4.4902
+  ip address 172.16.123.33 255.255.255.240
+  !
+  interface Vlan130
+  mac-address 000b.bec4.4903
+  ip address 172.16.123.49 255.255.255.240
+  !
+  interface Vlan140
+  mac-address 000b.bec4.4904
+  ip address 172.16.123.65 255.255.255.240
+  !
+  interface Vlan150
+  mac-address 000b.bec4.4905
+  ip address 172.16.123.81 255.255.255.240
+  !
+  interface Vlan160
+  mac-address 000b.bec4.4906
+  ip address 172.16.123.97 255.255.255.240
+  !
+  ip classless
+  !
+  ip flow-export version 9
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  !
+  line con 0
+  !
+  line aux 0
+  !
+  line vty 0 4
+  login
+  !
+  !
+  !
+  !
+  end
+****

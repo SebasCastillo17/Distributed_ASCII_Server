@@ -37,7 +37,6 @@ How to explore this repository
  1. Clone the repository.
  2. Inspect the major modules and examples grouped by topic.
  3. Compile subprojects using provided `Makefile` or `CMakeLists.txt` files.
- 4. Review code and documentation in each module to include relevant snippets in your CV.
 
 Author
 Sebastián Castillo
